@@ -3,9 +3,9 @@ const API_BASE = 'https://compras.dados.gov.br/licitacoes/v1/licitacoes.json';
 
 // Dados de exemplo + IA (quando API falhar)
 const EXEMPLOS = [
-    {id:1, numero:"001/2025", orgao:"Prefeitura SP", valor:25000, descricao:"Material escritório URGENTE", estado:"SP", scoreIA:95},
-    {id:2, numero:"002/2025", orgao:"Ministério Saúde", valor:150000, descricao:"Equipamentos médicos", estado:"RJ", scoreIA:88},
-    {id:3, numero:"003/2025", orgao:"Prefeitura RJ", valor:8000, descricao:"Limpeza predial", estado:"RJ", scoreIA:72}
+    {id:1, numero:"001/2025", orgao:"Prefeitura SP", valor:25000, descricao:"Material escritório URGENTE", estado:"SP", scoreIA:95, dataPublicacao: "2025-10-20", prazo: "15 dias"},
+    {id:2, numero:"002/2025", orgao:"Ministério Saúde", valor:150000, descricao:"Equipamentos médicos", estado:"RJ", scoreIA:88, dataPublicacao: "2025-10-25", prazo: "30 dias"},
+    {id:3, numero:"003/2025", orgao:"Prefeitura RJ", valor:8000, descricao:"Limpeza predial", estado:"RJ", scoreIA:72, dataPublicacao: "2025-10-27", prazo: "10 dias"}
 ];
 
 let todasLicitacoes = [];
@@ -17,7 +17,7 @@ async function buscarLicitacoes() {
         const url = `${API_BASE}?${termo ? `item_descricao=${termo}` : ''}&limit=50`;
         const res = await fetch(url);
         const data = await res.json();
-        todasLicitacoes = data.items || EXEMPLOS;
+        todasLicitacoes = (data.items || EXEMPLOS).map(item => ({...item, scoreIA: calcularScoreIA(item)}));
         exibirResultados(todasLicitacoes);
         playSound('search');
     } catch(e) {
@@ -28,11 +28,7 @@ async function buscarLicitacoes() {
 
 // 🤖 FILTRAR POR IA
 function filtrarIA() {
-    const filtradas = todasLicitacoes.map(op => ({
-        ...op,
-        scoreIA: calcularScoreIA(op)
-    })).filter(op => op.scoreIA > 70).sort((a,b) => b.scoreIA - a.scoreIA);
-    
+    const filtradas = todasLicitacoes.filter(op => op.scoreIA > 70).sort((a,b) => b.scoreIA - a.scoreIA);
     exibirResultados(filtradas);
     criarGrafico(filtradas);
     playSound('filter');
@@ -48,7 +44,30 @@ function calcularScoreIA(op) {
     return Math.min(score, 100);
 }
 
-// 📊 EXIBIR RESULTADOS
+// 📋 GERAR BRIEFING DETALHADO
+function gerarBriefing(op) {
+    const viabilidade = op.scoreIA > 80 ? 'Alta: Valor atrativo e baixa concorrência estimada.' : 
+                        op.scoreIA > 60 ? 'Média: Avalie prazos e documentos.' : 'Baixa: Riscos altos (pouco valor ou urgência excessiva).';
+    const recomendacoes = 'Precisa preparar: Proposta comercial (use template), documentos de habilitação (CNPJ, certidões), análise de concorrentes via portal. Participe se tiver expertise no setor.';
+    const briefing = `
+        <strong>📋 BRIEFING DA OPORTUNIDADE</strong><br><br>
+        <strong>Número do Edital:</strong> ${op.numero}<br>
+        <strong>Órgão Responsável:</strong> ${op.orgao}<br>
+        <strong>Valor Estimado:</strong> R$ ${op.valor.toLocaleString()}<br>
+        <strong>Descrição:</strong> ${op.descricao}<br>
+        <strong>Estado/Local:</strong> ${op.estado}<br>
+        <strong>Data de Publicação:</strong> ${op.dataPublicacao || 'Não disponível'}<br>
+        <strong>Prazo Estimado:</strong> ${op.prazo || 'Verificar no edital'}<br><br>
+        <strong>🤖 Análise IA - Score: ${op.scoreIA}/100</strong><br>
+        ${viabilidade}<br><br>
+        <strong>💡 Recomendações para Decisão:</strong><br>
+        ${recomendacoes}<br><br>
+        <strong>Próximos Passos:</strong> Baixe o edital completo no Portal da Transparência. Se viável, prepare proposta em até 48h.
+    `;
+    return briefing;
+}
+
+// 📊 EXIBIR RESULTADOS (ATUALIZADO COM BOTÃO DE BRIEFING)
 function exibirResultados(ops) {
     const div = document.getElementById('resultados');
     div.innerHTML = ops.map(op => `
@@ -58,11 +77,35 @@ function exibirResultados(ops) {
             <p><strong>Valor:</strong> R$ ${op.valor.toLocaleString()}</p>
             <p><strong>Estado:</strong> ${op.estado}</p>
             <p><strong>Descrição:</strong> ${op.descricao}</p>
+            <button class="btn-briefing" onclick="mostrarBriefing('${JSON.stringify(op).replace(/"/g, '&quot;')}')">📋 Gerar Briefing</button>
         </div>
     `).join('');
 }
 
-// 📈 GRÁFICO
+// 🪟 MOSTRAR MODAL DE BRIEFING
+function mostrarBriefing(opJson) {
+    const op = JSON.parse(opJson.replace(/&quot;/g, '"'));
+    document.getElementById('briefing-conteudo').innerHTML = gerarBriefing(op);
+    document.getElementById('briefing-titulo').textContent = `Briefing: ${op.numero}`;
+    document.getElementById('briefing-modal').style.display = 'flex';
+}
+
+// ❌ FECHAR MODAL
+function fecharBriefing() {
+    document.getElementById('briefing-modal').style.display = 'none';
+}
+
+// 📱 ENVIAR VIA WHATSAPP
+function enviarWhatsApp() {
+    const conteudo = document.getElementById('briefing-conteudo').innerText;
+    const numeroCliente = prompt('Digite o número do WhatsApp do cliente (ex: 5511999999999):'); // Ou fixe um número
+    if (numeroCliente) {
+        const mensagem = encodeURIComponent(`Olá! Aqui vai o briefing da oportunidade:\n\n${conteudo}`);
+        window.open(`https://wa.me/${numeroCliente}?text=${mensagem}`, '_blank');
+    }
+}
+
+// 📈 GRÁFICO (mantido igual)
 function criarGrafico(ops) {
     const ctx = document.getElementById('grafico').getContext('2d');
     new Chart(ctx, {
@@ -74,7 +117,7 @@ function criarGrafico(ops) {
     });
 }
 
-// 🔔 ALERTAS
+// 🔔 ALERTAS (mantido igual)
 function cadastrarAlerta() {
     const email = document.getElementById('email').value;
     if(email) {
@@ -89,7 +132,7 @@ function abrirEdital(id) {
     playSound('click');
 }
 
-// 🎵 EFEITOS SONOROS (OPCIONAL)
+// 🎵 EFEITOS SONOROS (mantido igual)
 function playSound(type) {
     const audio = new Audio();
     switch(type) {
@@ -98,10 +141,10 @@ function playSound(type) {
         case 'alert': audio.src = 'https://www.soundjay.com/buttons/beep-03.mp3'; break;
         case 'click': audio.src = 'https://www.soundjay.com/buttons/beep-04.mp3'; break;
     }
-    audio.play().catch(() => {}); // Ignora erro se som falhar
+    audio.play().catch(() => {});
 }
 
-// 📜 ROLAGEM SUAVE
+// 📜 ROLAGEM SUAVE (mantido igual)
 function scrollToSection(id) {
     document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
 }
