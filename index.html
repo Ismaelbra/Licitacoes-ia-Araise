@@ -64,3 +64,12 @@
     <script src="script.js"></script>
 </body>
 </html>
+<!-- Adicione isso no final do <section class="dashboard">, após o <div id="resultados"></div> -->
+<div id="briefing-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" onclick="fecharBriefing()">&times;</span>
+        <h2 id="briefing-titulo">Briefing da Oportunidade</h2>
+        <div id="briefing-conteudo"></div>
+        <button class="btn-whatsapp" onclick="enviarWhatsApp()">📱 Enviar via WhatsApp</button>
+    </div>
+</div>
