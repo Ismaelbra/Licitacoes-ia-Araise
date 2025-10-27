@@ -1,31 +1,19 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #f0f4f8, #e0e7ff); color: #333; }
 .content { margin-left: 250px; padding: 20px; }
-
 /* Sidebar */
-.sidebar { 
-    position: fixed; 
-    width: 250px; 
-    height: 100%; 
-    background: #1e40af; 
-    color: white; 
-    padding: 20px; 
-    transition: transform 0.3s; 
-    z-index: 1000;
-}
+.sidebar { position: fixed; width: 250px; height: 100%; background: #1e40af; color: white; padding: 20px; transition: transform 0.3s; z-index: 1000; }
 .sidebar h2 { margin-bottom: 20px; }
 .sidebar ul { list-style: none; }
 .sidebar ul li { margin: 15px 0; }
 .sidebar ul li a { color: #bbf7d0; text-decoration: none; }
 .sidebar ul li a:hover { color: #34d399; }
-
 /* Header */
 header { text-align: center; padding: 40px; background: #1e40af; color: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 header h1 { font-size: 2.5em; }
 header p { font-size: 1.2em; margin: 10px 0; }
 .btn-explore { background: #f97316; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
 .btn-explore:hover { background: #ea580c; }
-
 /* Search */
 .search { background: white; padding: 20px; margin: 20px 0; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
 input { padding: 12px; width: 300px; border: 2px solid #93c5fd; border-radius: 5px; font-size: 16px; transition: border-color 0.3s; }
@@ -34,25 +22,21 @@ input:focus { border-color: #3b82f6; outline: none; }
 .btn-search:hover { background: #2563eb; }
 .btn-ia { background: #10b981; color: white; padding: 12px 20px; margin: 5px; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
 .btn-ia:hover { background: #059669; }
-
 /* Dashboard */
 .dashboard { margin: 20px 0; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 .oportunidade { background: #dbeafe; padding: 15px; margin: 15px 0; border-left: 5px solid #3b82f6; border-radius: 5px; transition: transform 0.2s; }
 .oportunidade:hover { transform: scale(1.02); }
 #grafico { max-width: 100%; margin: 20px 0; }
-
 /* Templates */
 .templates { margin: 20px 0; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 .template-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
 .template-card { background: #a7f3d0; color: #065f46; padding: 20px; text-align: center; text-decoration: none; border-radius: 10px; transition: background 0.3s, transform 0.2s; }
 .template-card:hover { background: #6ee7b7; transform: scale(1.05); }
 .template-card i { font-size: 1.5em; margin-bottom: 10px; }
-
 /* Alertas */
 .alertas { margin: 20px 0; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
 .btn-alert { background: #f59e0b; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
 .btn-alert:hover { background: #d97706; }
-
 /* Modal para Briefing */
 .modal { position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; }
 .modal-content { background: white; margin: auto; padding: 20px; border-radius: 10px; width: 80%; max-width: 600px; max-height: 80%; overflow-y: auto; position: relative; }
@@ -61,7 +45,6 @@ input:focus { border-color: #3b82f6; outline: none; }
 #briefing-conteudo { line-height: 1.6; margin: 10px 0; }
 .btn-whatsapp { background: #25D366; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; transition: background 0.3s; }
 .btn-whatsapp:hover { background: #128C7E; }
-
 /* Botão de Briefing nos Cards */
 .btn-briefing { background: #8B5CF6; color: white; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; transition: background 0.3s; }
 .btn-briefing:hover { background: #7C3AED; }
