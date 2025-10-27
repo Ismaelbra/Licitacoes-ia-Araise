@@ -52,6 +52,7 @@ input:focus { border-color: #3b82f6; outline: none; }
 .alertas { margin: 20px 0; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
 .btn-alert { background: #f59e0b; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
 .btn-alert:hover { background: #d97706; }
+
 /* Modal para Briefing */
 .modal { position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; }
 .modal-content { background: white; margin: auto; padding: 20px; border-radius: 10px; width: 80%; max-width: 600px; max-height: 80%; overflow-y: auto; position: relative; }
