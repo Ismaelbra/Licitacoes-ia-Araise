@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Licitações IA - Oportunidades Inteligentes</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Menu Lateral Animado -->
+    <nav class="sidebar">
+        <h2><i class="fas fa-chart-line"></i> Menu</h2>
+        <ul>
+            <li><a href="#home">🏠 Home</a></li>
+            <li><a href="#dashboard">📊 Dashboard</a></li>
+            <li><a href="#templates">📄 Templates</a></li>
+            <li><a href="#alertas">🔔 Alertas</a></li>
+        </ul>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="content">
+        <header id="home">
+            <h1>🧠 Licitações IA</h1>
+            <p>Encontre as melhores oportunidades com Inteligência Artificial!</p>
+            <button class="btn-explore" onclick="scrollToSection('dashboard')">Explorar Agora <i class="fas fa-arrow-down"></i></button>
+        </header>
+
+        <!-- BUSCA -->
+        <section class="search" id="search">
+            <input type="text" id="busca" placeholder="Ex: material escritório, SP, >R$10.000">
+            <button class="btn-search" onclick="buscarLicitacoes()">🔍 Buscar</button>
+            <button class="btn-ia" onclick="filtrarIA()">🤖 Filtrar por IA</button>
+        </section>
+
+        <!-- DASHBOARD IA -->
+        <section class="dashboard" id="dashboard">
+            <h2>📊 Dashboard IA - Top Oportunidades</h2>
+            <div id="resultados"></div>
+            <canvas id="grafico" width="400" height="200"></canvas>
+        </section>
+
+        <!-- TEMPLATES WORD -->
+        <section class="templates" id="templates">
+            <h2>📄 Modelos Word Editáveis</h2>
+            <div class="template-grid">
+                <a href="templates/proposta.docx" download class="template-card"><i class="fas fa-file-alt"></i> Proposta Comercial</a>
+                <a href="templates/recurso.docx" download class="template-card"><i class="fas fa-balance-scale"></i> Recurso Administrativo</a>
+                <a href="templates/ata.docx" download class="template-card"><i class="fas fa-clipboard-list"></i> Ata de Registro</a>
+                <a href="templates/contrato.docx" download class="template-card"><i class="fas fa-file-contract"></i> Contrato Modelo</a>
+            </div>
+        </section>
+
+        <!-- ALERTAS -->
+        <section class="alertas" id="alertas">
+            <h2>🔔 Receba Alertas por Email</h2>
+            <input type="email" id="email" placeholder="seu@email.com">
+            <button class="btn-alert" onclick="cadastrarAlerta()">Cadastrar <i class="fas fa-bell"></i></button>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
