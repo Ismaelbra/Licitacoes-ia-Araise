@@ -98,14 +98,14 @@ function fecharBriefing() {
 // 📱 ENVIAR VIA WHATSAPP
 function enviarWhatsApp() {
     const conteudo = document.getElementById('briefing-conteudo').innerText;
-    const numeroCliente = prompt('Digite o número do WhatsApp do cliente (ex: 5511999999999):'); // Ou fixe um número
+    const numeroCliente = prompt('Digite o número do WhatsApp do cliente (ex: 5511999999999):');
     if (numeroCliente) {
         const mensagem = encodeURIComponent(`Olá! Aqui vai o briefing da oportunidade:\n\n${conteudo}`);
         window.open(`https://wa.me/${numeroCliente}?text=${mensagem}`, '_blank');
     }
 }
 
-// 📈 GRÁFICO (mantido igual)
+// 📈 GRÁFICO
 function criarGrafico(ops) {
     const ctx = document.getElementById('grafico').getContext('2d');
     new Chart(ctx, {
@@ -117,7 +117,7 @@ function criarGrafico(ops) {
     });
 }
 
-// 🔔 ALERTAS (mantido igual)
+// 🔔 ALERTAS
 function cadastrarAlerta() {
     const email = document.getElementById('email').value;
     if(email) {
@@ -132,7 +132,7 @@ function abrirEdital(id) {
     playSound('click');
 }
 
-// 🎵 EFEITOS SONOROS (mantido igual)
+// 🎵 EFEITOS SONOROS
 function playSound(type) {
     const audio = new Audio();
     switch(type) {
@@ -144,7 +144,7 @@ function playSound(type) {
     audio.play().catch(() => {});
 }
 
-// 📜 ROLAGEM SUAVE (mantido igual)
+// 📜 ROLAGEM SUAVE
 function scrollToSection(id) {
     document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
 }
